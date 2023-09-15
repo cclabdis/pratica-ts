@@ -1,17 +1,18 @@
+import { Person } from "protocols/people.protocol";
 import { connection } from "./../database/database";
 
-async function countPeople(){
-   const calc = await connection.query(
-        `SELECT COUNT(*) FROM people `
+async function countPeople(): Promise<number> {
+    const calc = await connection.query<Person[]>(
+        `SELECT * FROM people `
     );
-    return calc
+    return calc.rowCount
 }
 
-async function getPeople(id: number){
-    const people = await connection.query(
-        `SELECT * FROM people WHERE id = $1;`
+async function getPeople(id: number): Promise<Person>{
+    const people = await connection.query<Person>(
+        `SELECT * FROM people WHERE id = $1;`,[id]
     );
-    return people
+    return people.rows[0]
 }
 
 export const peopleRepository ={ countPeople, getPeople}

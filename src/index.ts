@@ -1,15 +1,9 @@
 import express, { Request, Response, json } from "express"
-// import { User } from "protocols/user-protocol"
+import router from "./routes/people.routes"
 
 const app = express()
 app.use(json())
-
-
-app.get("/person", (req: Request,res: Response) => {
-    res.status(200).send("Ok")
-})
-
-
+app.use(router)
 
 app.listen(5000, () =>
 {
